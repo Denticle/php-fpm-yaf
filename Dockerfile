@@ -1,5 +1,4 @@
 FROM php:7.2.6-fpm
-ENV ACTIVE=local
 ENV INSTALL_LIB_DEP="wget zip unzip"
 RUN apt-get update
 RUN apt-get install -y $INSTALL_LIB_DEP zlib1g-dev
