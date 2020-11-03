@@ -18,8 +18,7 @@ RUN set -ex \
         && cd yaf-yaf-3.0.8 \
         && phpize \
         && ./configure \
-        && make && make install \
-        && sh -c 'echo "extension=yaf.so\nyaf.environ='$ACTIVE'\nyaf.use_namespace=on";' | tee /usr/local/etc/php/conf.d/yaf.ini
+        && make && make install
 RUN apt-get remove -y $INSTALL_LIB_DEP && apt-get clean && rm -r /var/lib/apt/lists/*
 CMD ["php-fpm"]
 
