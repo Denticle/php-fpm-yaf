@@ -2,6 +2,11 @@ FROM php:7.2.6-fpm
 ENV INSTALL_LIB_DEP="wget zip unzip"
 RUN apt-get update
 RUN apt-get install -y $INSTALL_LIB_DEP zlib1g-dev
+RUN apt-get update && \
+    apt-get -yq update && \
+    apt-get install -y xvfb && \
+    apt-get install -y xvfb libxfont1 xfonts-encodings xfonts-utils xfonts-base xfonts-75dpi && \
+    apt-get install -y wkhtmltopdf
 RUN set -ex \
         && cd /opt \
         && wget https://github.com/phpredis/phpredis/archive/4.0.1.zip -O redis-4.0.1.zip \
@@ -20,5 +25,6 @@ RUN set -ex \
         && ./configure \
         && make && make install
 RUN apt-get remove -y $INSTALL_LIB_DEP && apt-get clean && rm -r /var/lib/apt/lists/*
+COPY libs/simsun.ttf /usr/share/fonts/
 CMD ["php-fpm"]
 
