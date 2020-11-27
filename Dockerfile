@@ -5,7 +5,7 @@ RUN apt-get install -y $INSTALL_LIB_DEP zlib1g-dev
 RUN apt-get -yq update && \
     apt-get install -y xvfb && \
     apt-get install -y xvfb libxfont1 xfonts-encodings xfonts-utils xfonts-base xfonts-75dpi && \
-    apt-get install -y wkhtmltopdf
+    apt-get install -y wkhtmltopdf supervisor
 RUN set -ex \
         && cd /opt \
         && wget https://github.com/phpredis/phpredis/archive/4.0.1.zip -O redis-4.0.1.zip \
@@ -23,6 +23,7 @@ RUN set -ex \
         && phpize \
         && ./configure \
         && make && make install
+RUN docker-php-ext-install pdo_mysql mysqli bcmath        
 RUN apt-get remove -y $INSTALL_LIB_DEP && apt-get clean && rm -r /var/lib/apt/lists/*
 COPY SimSun.ttf /usr/share/fonts/
 CMD ["php-fpm"]
